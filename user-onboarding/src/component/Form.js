@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import './Form.css';
 import * as yup from "yup";
 import axios from "axios";
 
@@ -10,37 +9,29 @@ const formSchema =yup.object().shape({
     password: yup.string().required('Password is required'),
     passwordConfirmation: yup.string()
      .oneOf([yup.ref('password'), null], 'Passwords must match'),
-    tos: yup.boolean().oneOf([true], "please agree to terms of use"),
+    terms: yup.boolean().oneOf([true], "please agree to terms of use"),
 });
 
 //Form Function
 function Form() {
-    // state for whether our button should be disabled or not.
-    const [buttonDisabled, setButtonDisabled] = useState(true);
 
     //set state for form
     const [formState, setFormState] = useState({
         name: '', 
         email: '',
         password: '',
-        tos: "",
+        terms: "checked"
     });
     // set state for errors
     const [errors, setErrors] = useState({
         name: '', 
         email: '',
         password: '',
-        tos: "",
+        terms: ""
     });
 
      // new state to set our post request too. So we can console.log and see it.
   const [post, setPost] = useState([]);
-
-  useEffect(() => {
-    formSchema.isValid(formState).then(valid => {
-      setButtonDisabled(!valid);
-    });
-  }, [formState]);
 
   const formSubmit = e => {
     e.preventDefault();
@@ -51,18 +42,16 @@ function Form() {
         console.log("success", post);
         // reset form if successful
         setFormState({
-          name: "",
-          email: "",
-          tos: "",
-          positions: "",
-          motivation: ""
+            name: '', 
+            email: '',
+            password: '',
+            terms: ""
         });
       })
       .catch(err => console.log(err.response));
   };
 
   const validateChange = e => {
-    // Reach will allow us to "reach" into the schema and test only one part.
     yup
       .reach(formSchema, e.target.name)
       .validate(e.target.value)
@@ -103,6 +92,7 @@ function Form() {
                 name='name'
                 onChange={inputChange}
             />
+            {errors.name.length > 0 ? <p className='error'>{errors.name}</p> : null}
             <br /><br />
             <label htmlFor='email'>Email:</label>
             <input 
@@ -111,6 +101,7 @@ function Form() {
                 name='email'
                 onChange={inputChange}
             />
+            {errors.email.length > 0 ? (<p className='error'>{errors.email}</p>) : null}
             <br /><br />
             <label htmlFor='password'>Password:</label>
             <input 
@@ -119,22 +110,23 @@ function Form() {
                 name='password'
                 onChange={inputChange}
             />
+            {errors.password.length > 0 ? (<p className='error'>{errors.password}</p>) : null}
             <br /><br />
-            <label className="tos" htmlFor='tos'>
+            <label className="terms" htmlFor='terms'>
             <input 
                 type='checkbox'
-                checked={formState.tos}
-                name='tos'
+                checked={formState.terms}
+                name='terms'
                 nChange={inputChange}
             />
             Terms of Service:
             </label>
             <br /><br />
             <pre>{JSON.stringify(post, null, 2)}</pre>
-            <button disabled={buttonDisabled}>Submit</button>
+            <button>Submit</button>
         </form>  
         </div>
     )
 };
 
-export default Form
+export default Form;
