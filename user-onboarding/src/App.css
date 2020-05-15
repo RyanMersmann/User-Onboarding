@@ -1,5 +1,6 @@
 html {
   font-size: 62.5%;
+  background: pink;
 }
 
 .App {
@@ -67,8 +68,8 @@ button {
   border-radius: 5px;
   letter-spacing: 2px;
   outline: none;
-  background-color: #4dd0e1;
-  background-image: linear-gradient(to right, #4dd0e1, #1ee7e2);
+  background-color: #e1b94d;
+  background-image: linear-gradient(to right, #e1b94d, #e7681e);
   color: #fff;
   cursor: pointer;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
@@ -76,7 +77,8 @@ button {
 
 button:hover {
   background-image: none;
-  background-color: #4dd0e1;
+  background-color: #4de16d;
+  background-image: linear-gradient(to right, #1e97e7, #4de190);
   box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3);
 }
 
@@ -93,12 +95,12 @@ button:disabled {
   color: red;
 }
 
-.terms {
+.tos {
   display: inline-block;
   align-self: self-start;
 }
 
-.terms input {
+.tos input {
   width: 15px;
   display: inline-block;
   margin-right: 5px;

@@ -9,7 +9,7 @@ const formSchema =yup.object().shape({
     password: yup.string().required('Password is required'),
     passwordConfirmation: yup.string()
      .oneOf([yup.ref('password'), null], 'Passwords must match'),
-    terms: yup.boolean().oneOf([true], "please agree to terms of use"),
+    tos: yup.boolean().oneOf([true], "please agree to terms of service"),
 });
 
 //Form Function
@@ -20,14 +20,14 @@ function Form() {
         name: '', 
         email: '',
         password: '',
-        terms: "checked"
+        tos: ""
     });
     // set state for errors
     const [errors, setErrors] = useState({
         name: '', 
         email: '',
         password: '',
-        terms: ""
+        tos: ""
     });
 
      // new state to set our post request too. So we can console.log and see it.
@@ -45,7 +45,7 @@ function Form() {
             name: '', 
             email: '',
             password: '',
-            terms: ""
+            tos: ""
         });
       })
       .catch(err => console.log(err.response));
@@ -83,41 +83,46 @@ function Form() {
 
     // return the form
     return (
-        <div class="user-form">
+        <div className="user-form">
           <form onSubmit={formSubmit}>
+
+              {/* Name */}
             <label htmlFor='name'>Name:</label>
             <input
                 value={formState.name}
                 type='text'
                 name='name'
                 onChange={inputChange}
-            />
-            {errors.name.length > 0 ? <p className='error'>{errors.name}</p> : null}
+            />{errors.name.length > 0 ? <p className='error'>{errors.name}</p> : null}
             <br /><br />
+
+            {/* Email */}
             <label htmlFor='email'>Email:</label>
             <input 
                 value={formState.email}
                 type='text'
                 name='email'
                 onChange={inputChange}
-            />
-            {errors.email.length > 0 ? (<p className='error'>{errors.email}</p>) : null}
+            />{errors.email.length > 0 ? (<p className='error'>{errors.email}</p>) : null}
             <br /><br />
+
+            {/* Password */}
             <label htmlFor='password'>Password:</label>
             <input 
                 value={formState.password}
                 type='password'
                 name='password'
                 onChange={inputChange}
-            />
-            {errors.password.length > 0 ? (<p className='error'>{errors.password}</p>) : null}
+            />{errors.password.length > 0 ? (<p className='error'>{errors.password}</p>) : null}
             <br /><br />
-            <label className="terms" htmlFor='terms'>
+
+            {/* terms of service */}
+            <label className="tos" htmlFor='tos'>
             <input 
                 type='checkbox'
-                checked={formState.terms}
-                name='terms'
-                nChange={inputChange}
+                checked={formState.tos}
+                name='tos'
+                onChange={inputChange}
             />
             Terms of Service:
             </label>
